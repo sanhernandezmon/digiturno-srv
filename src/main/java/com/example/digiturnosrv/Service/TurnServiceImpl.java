@@ -30,8 +30,6 @@ public class TurnServiceImpl implements TurnService {
     @Autowired
     private LastTurnAttendedService lastTurnAttendedService;
 
-    @Autowired
-    private RabbitMQSender rabbitMQSender;
     @Override
     public List<Turn> findTurns() {
         List<Turn> allTurns = repository.findByOrderByCreationDateDesc();
@@ -56,7 +54,6 @@ public class TurnServiceImpl implements TurnService {
             repository.save(turn);
             standsService.deleteByStandNumber(free.getStandNumber());
             lastTurnAttendedService.update();
-            rabbitMQSender.send(turn);
             return turn;
         }
         return null;
@@ -65,6 +62,7 @@ public class TurnServiceImpl implements TurnService {
 
     @Transactional
     public void restartData(){
+        repository.truncateTurn();
         standsService.deleteAll();
         lastTurnAttendedService.deleteAll();
         lastTurnGivenService.deleteAll();

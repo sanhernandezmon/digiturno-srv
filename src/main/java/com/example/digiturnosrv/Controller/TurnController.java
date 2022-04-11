@@ -20,6 +20,7 @@ public class TurnController {
     }
 
     @DeleteMapping("api/v1/restart")
+    @CrossOrigin(origins = "*")
     public void restartData(){
         turnService.restartData();
     }

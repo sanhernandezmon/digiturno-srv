@@ -19,6 +19,8 @@ public class FreeStandServiceImpl implements FreeStandService{
     @Autowired
     private TurnService turnService;
 
+    @Autowired TurnCopyService turnCopyService;
+
     @Override
     public FreeStands enqueStand(Integer standNumber) {
         List<FreeStands> freeStands = (List<FreeStands>) repository.findAll();
@@ -27,6 +29,7 @@ public class FreeStandServiceImpl implements FreeStandService{
             FreeStands freeStand = new FreeStands(standNumber, Date.from(Instant.now()));
             repository.save(freeStand);
             turnService.createTurn();
+            turnCopyService.createTurn();
             return freeStand;
         }
         return null;
@@ -34,8 +37,8 @@ public class FreeStandServiceImpl implements FreeStandService{
 
     private boolean VerifyStandInList(Integer standNumber, List<FreeStands> freeStands){
         boolean alreadyInQueue = false;
-        for (int i=0;i<freeStands.size();i++){
-            alreadyInQueue = alreadyInQueue || (freeStands.get(i).getStandNumber()==standNumber);
+        for (FreeStands freeStand : freeStands) {
+            alreadyInQueue = alreadyInQueue || (freeStand.getStandNumber() == standNumber);
         }
         return alreadyInQueue;
     }
@@ -62,8 +65,8 @@ public class FreeStandServiceImpl implements FreeStandService{
     @Transactional
     public void deleteAll() {
         List<FreeStands> freeStandsList = (List<FreeStands>) repository.findAll();
-        for (int i = 0; i< freeStandsList.size(); i++){
-            Integer standNumber = freeStandsList.get(i).getStandNumber();
+        for (FreeStands freeStands : freeStandsList) {
+            Integer standNumber = freeStands.getStandNumber();
             repository.deleteByStandNumber(standNumber);
         }
     }
