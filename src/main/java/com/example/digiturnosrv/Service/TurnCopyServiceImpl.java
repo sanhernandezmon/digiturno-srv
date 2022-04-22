@@ -18,7 +18,7 @@ public class TurnCopyServiceImpl implements TurnCopyService{
     private TurnCopyRepository repository;
 
     @Autowired
-    private FreeStandService standsService;
+    private FreeStandCopyService standsService;
 
 
     @Autowired
@@ -33,7 +33,7 @@ public class TurnCopyServiceImpl implements TurnCopyService{
     @Override
     public TurnCopy createTurn() {
         //Obtener el primer stand en fila
-        FreeStands free = standsService.firstStand();
+        FreeStandsCopy free = standsService.firstStand();
 
         //Obtener el ultimo turno atendido
         LastTurnAttendedCopy lastTurnAttendedCopy = lastTurnAttendedService.findLast();
@@ -43,7 +43,7 @@ public class TurnCopyServiceImpl implements TurnCopyService{
             TurnCopy turn = new TurnCopy( UUID.randomUUID(), free.getStandNumber(), (lastTurnAttendedCopy.getLastTurnAttended()%99)+1,  Date.from(
                     Instant.now()));
             repository.save(turn);
-            //standsService.deleteByStandNumber(free.getStandNumber());
+            standsService.deleteByStandNumber(free.getStandNumber());
             lastTurnAttendedService.update();
             return turn;
         }
@@ -55,5 +55,6 @@ public class TurnCopyServiceImpl implements TurnCopyService{
     public void restartData(){
         standsService.deleteAll();
         repository.truncateTurn();
+        lastTurnAttendedService.deleteAll();
     }
 }

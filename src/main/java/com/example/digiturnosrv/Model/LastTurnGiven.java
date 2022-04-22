@@ -2,10 +2,12 @@ package com.example.digiturnosrv.Model;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.Table;
 import lombok.AllArgsConstructor;
 
 @AllArgsConstructor
 @Entity
+@Table(name = "LastTurnGiven")
 public class LastTurnGiven {
 
     @Id

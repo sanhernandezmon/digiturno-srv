@@ -16,7 +16,7 @@ public interface TurnRepository extends CrudRepository<Turn, UUID> {
 
     @Modifying
     @Query(
-            value = "truncate table Turn",
+            value = "truncate table turn",
             nativeQuery = true
     )
     void truncateTurn();

@@ -1,6 +1,7 @@
 package com.example.digiturnosrv.Controller;
 
 import com.example.digiturnosrv.Model.FreeStands;
+import com.example.digiturnosrv.Service.FreeStandCopyService;
 import com.example.digiturnosrv.Service.FreeStandService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -14,10 +15,12 @@ public class FreeStandController {
     @Autowired
     private FreeStandService freeStandService;
 
+    @Autowired FreeStandCopyService freeStandCopyService;
 
     @PostMapping("api/v1/stand/{standNumber}")
     @CrossOrigin(origins = "*")
     public FreeStands EnqueueStand(@PathVariable Integer standNumber){
+        freeStandCopyService.enqueStand(standNumber);
         return freeStandService.enqueStand(standNumber);
     }
 

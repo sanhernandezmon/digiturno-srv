@@ -10,14 +10,14 @@ import lombok.AllArgsConstructor;
 
 @Entity
 @AllArgsConstructor
-@Table(name = "FreeStands")
-public class FreeStands {
+@Table(name = "FreeStandsCopy")
+public class FreeStandsCopy {
     @Id
     private Integer standNumber;
     @Column
     private Date creationDate;
 
-    public FreeStands() {
+    public FreeStandsCopy() {
 
     }
 

@@ -6,13 +6,14 @@ import java.util.UUID;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 
 @Entity
 @AllArgsConstructor
 @NoArgsConstructor
+@Table(name = "TurnCopy")
 public class TurnCopy {
     @Id
     private UUID id;

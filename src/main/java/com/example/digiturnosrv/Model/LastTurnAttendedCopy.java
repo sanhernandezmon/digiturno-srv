@@ -2,12 +2,14 @@ package com.example.digiturnosrv.Model;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 
 @Entity
 @AllArgsConstructor
 @NoArgsConstructor
+@Table(name = "LastTurnAttendedCopy")
 public class LastTurnAttendedCopy {
     @Id
     private Integer lastTurnAttended;
